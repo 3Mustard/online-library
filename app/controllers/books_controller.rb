@@ -1,31 +1,30 @@
+#helper methods located in application_controller.rb
+
 class BooksController < ApplicationController
 
-    get #users logged in home page do
-        #render users profile 
+    get '/books' do 
+        "a list of the users books"
     end 
 
-    get #list of users books do 
-        #render index of all books belonging to the user
-    end 
-
+    #render a new book form if the user is logged in
     get '/books/new' do 
-        #check if they are logged in then send to new book form
-        if logged_in?
-            #redirect to profile
+        if !logged_in?
+            redirect '/login' 
         else
-            redirect '/login'
+            "new post form" #render form erb :''
         end 
     end  
 
+    #renders an edit form if the post belongs to the user and they are logged in
     get '/books/:id/edit' do 
-        #check if they are logged in
-        #if they are redirect to an edit form
-        #if not then back to login
+        if !logged_in? 
+            redirect '/login' 
+        else 
+            if book = current_user.books.find_by(params[:id])
+                "edit form"
+            else 
+                redirect '/books'
+            end 
+        end     
     end
-    
-    patch do 
-    end 
-
-    delete do 
-    end 
 end 

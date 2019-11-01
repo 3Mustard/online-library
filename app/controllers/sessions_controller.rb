@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 
     #set's session/logs a user in via helper method - login
     post '/sessions' do 
-        login(params[:email])
+        login(params[:email], params[:password])
         redirect '/posts'
     end 
 
