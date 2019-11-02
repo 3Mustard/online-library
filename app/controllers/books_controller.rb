@@ -2,18 +2,30 @@
 
 class BooksController < ApplicationController
 
-    get '/books' do 
-        "a list of the users books"
-    end 
-
     #render a new book form if the user is logged in
     get '/books/new' do 
         if !logged_in?
             redirect '/login' 
         else
-            "new post form" #render form erb :''
+            erb :'/books/new'
         end 
     end  
+
+    post '/books/new' do 
+        @book = Book.new(:title => params[:title], :author => params[:author]) #creates a new book object
+        @book.user = current_user #associates the book to the current user
+        @book.save
+        redirect "/books/#{@book.id}"
+    end 
+
+    get '/books/:id' do 
+        @book = Book.find_by_id(params[:id]) #finds the book by id
+        if @book.user == current_user #checks if the book entry belongs to the current user
+            erb :'/books/show'
+        else
+            "error"
+        end 
+    end 
 
     #renders an edit form if the post belongs to the user and they are logged in
     get '/books/:id/edit' do 
