@@ -1,0 +1,12 @@
+<p>Welcome!<p>
+<%= "#{current_user.email}" %>
+<p><a href='/books/new'>new book</p></a>
+
+
+<p> Your library <p>
+<% current_user.books.each do |book| %>
+  <div>
+    <%= book.title + " by " %>
+    <%= book.author %>
+  </div>
+<% end %> 
