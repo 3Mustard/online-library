@@ -3,12 +3,13 @@
 class BooksController < ApplicationController
     
     #render index of all the suer books
-    get '/books' do
+    get '/books/index' do
       if !logged_in?
         redirect '/login'
       else
         @books = current_user.books.all #should grab all the books belonging to the current user but need to check. might not need .all
         erb :'/books/index'
+      end 
     end
 
     #render a new book form if the user is logged in
@@ -20,7 +21,7 @@ class BooksController < ApplicationController
         end
     end
 
-    post '/books' do
+    post '/books/new' do
         @book = Book.new(:title => params[:title], :author => params[:author]) #creates a new book object
         @book.user = current_user #associates the book to the current user
         @book.save
@@ -41,10 +42,10 @@ class BooksController < ApplicationController
         if !logged_in?
             redirect '/login'
         else
-            if book = current_user.books.find_by(params[:id])
-                "edit form"
+            if @book = current_user.books.find_by(params[:id])
+                erb :'/books/edit'
             else
-                redirect '/books'
+                redirect '/books/index'
             end
         end
     end
@@ -60,6 +61,6 @@ class BooksController < ApplicationController
     delete 'books/:id' do
       @book = Book.find_by_id(params[:id])
       @book.delete
-      redirect '/books'
+      redirect '/books/index'
     end
 end
