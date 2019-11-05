@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     #set's session/logs a user in via helper method - login
     post '/sessions' do 
         login(params[:email], params[:password])
-        redirect "/profile"
+        redirect "/books/index"
     end 
 
     #clears the session/logs the user out via helper method - logout  
