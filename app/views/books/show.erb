@@ -1,5 +1,6 @@
 <p>The book view page</p>
-<%= @book.title %>
-<%= @book.author %>
+<p><%= @book.title + " by " + @book.author %></p>
 
-<p><a href="/books/<%=@book.id%>/edit">edit book</p>
+<p><a href="/books/<%=@book.id%>/edit">edit book</p></a>
+<p><a href="/books/<%=@book.id%>/delete">delete book</p></a>
+<p><a href='/books/index'>Go back to your library</p></a>
