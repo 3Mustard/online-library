@@ -1,10 +1,5 @@
 class UsersController < ApplicationController 
 
-    #renders the users profile page
-    get '/profile' do 
-        erb :profile
-    end 
-
     #renders a form to sign up
     get '/signup' do 
         erb :'users/signup'
