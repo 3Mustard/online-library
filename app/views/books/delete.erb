@@ -1,1 +1,7 @@
-confirms the user wants to delete the book
+<p>Are you sure you want to delete the book <%=@book.title%>?</p>
+<form action="/books/<%=@book.id%>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="delete">
+</form>
+
+<p><a href='/books/index'>Go back to your library</p></a>
