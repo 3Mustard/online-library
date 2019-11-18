@@ -1,5 +1,3 @@
-#helper methods logged_in? and current_user located in application_controller.rb
-
 class BooksController < ApplicationController
     
     #if a user is logged in the index view of all the users books will be rendered
@@ -31,7 +29,7 @@ class BooksController < ApplicationController
 
     #if the book belongs to the current user a page displaying the book will be rendered.
     get '/books/:id' do
-        @book = Book.find_by_id(params[:id])
+        set_book
         if @book.user == current_user 
             erb :'/books/show'
         else
@@ -41,7 +39,7 @@ class BooksController < ApplicationController
 
     #renders an edit form if the book belongs to the current user
     get '/books/:id/edit' do
-        @book = Book.find_by_id(params[:id])
+        set_book
         if @book.user == current_user
             erb :'/books/edit'       
         else
@@ -51,23 +49,29 @@ class BooksController < ApplicationController
     
     #handles a post from books/edit.erb by updating the values of a Book object
     patch '/books/:id' do
-      @book = Book.find_by_id(params[:id])
-      @book.title = params[:title]
-      @book.author = params[:author]
-      @book.save
-      redirect "/books/#{@book.id}"
+        set_book
+        @book.title = params[:title]
+        @book.author = params[:author]
+        @book.save
+        redirect "/books/#{@book.id}"
     end
 
     #sends user to a confirm delete page
     get '/books/:id/delete' do
-        @book = Book.find_by_id(params[:id])
+        set_book
         erb :'/books/delete'
     end 
     
     #handles a delete request from books/delete.erb
     delete '/books/:id' do
-      @book = Book.find_by_id(params[:id])
-      @book.delete
-      redirect '/books/index'
+        set_book
+        @book.delete
+        redirect '/books/index'
     end
+
+    private 
+
+    def set_book 
+        @book = Book.find_by_id(params[:id])
+    end 
 end
