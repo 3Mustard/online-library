@@ -1,13 +1,12 @@
 ## Library
 
-brief decription
+Keep track of your books online
+ability to review and read other reviews coming soon.
 
 ## Installation
 
-
-
-## Usage
-
+run bundle install to install required gems
+run shotgun to launch in the web browser
 
 
 ## Development
@@ -22,4 +21,4 @@ Please contact 3Mustard@github
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+This code is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
