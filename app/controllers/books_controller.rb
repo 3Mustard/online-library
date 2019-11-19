@@ -1,7 +1,9 @@
+#helper methods logged_in? and current_user located in application_controller.rb
+
 class BooksController < ApplicationController
     
-    #if a user is logged in the index view of all the users books will be rendered
-    get '/books/index' do
+    #if a user is logged in, the index view of all the users books will be rendered
+    get '/books' do
       if !logged_in? 
         redirect '/login'
       else
@@ -10,7 +12,7 @@ class BooksController < ApplicationController
       end 
     end
 
-    #if a user is logged in the new book form at books/new.erb is rendered
+    #if a user is logged in, the new book form is rendered
     get '/books/new' do
         if !logged_in? 
             redirect '/login'
@@ -20,9 +22,8 @@ class BooksController < ApplicationController
     end
 
     #handles a form submitted from books/new.erb
-    post '/books/new' do
-        @book = Book.new(:title => params[:title], :author => params[:author])
-        @book.user = current_user #associates the book to the current user 
+    post '/books' do 
+        @book = current_user.books.build(:title => params[:title], :author => params[:author])
         @book.save
         redirect "/books/#{@book.id}"
     end
@@ -43,7 +44,7 @@ class BooksController < ApplicationController
         if @book.user == current_user
             erb :'/books/edit'       
         else
-            redirect '/books/index'
+            redirect '/books'
         end
     end
     
@@ -62,15 +63,16 @@ class BooksController < ApplicationController
         erb :'/books/delete'
     end 
     
-    #handles a delete request from books/delete.erb
+    #handles a delete request
     delete '/books/:id' do
         set_book
         @book.delete
-        redirect '/books/index'
+        redirect '/books'
     end
 
     private 
-
+    
+    #returns a book based on it's id
     def set_book 
         @book = Book.find_by_id(params[:id])
     end 
