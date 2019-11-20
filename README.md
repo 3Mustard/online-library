@@ -1,11 +1,10 @@
 ## Library
 
-Keep track of your books online
-ability to review and read other reviews coming soon.
+Keep track of your books online. The ability to review and read other reviews coming soon.
 
 ## Installation
 
-run bundle install to install required gems
+run bundle install to install required gems.
 run shotgun to launch in the web browser
 
 
